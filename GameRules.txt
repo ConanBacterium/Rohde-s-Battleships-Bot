@@ -1,0 +1,14 @@
+Ships pr player (may not lay diagonally): 
+1 x 5
+2 x 3
+2 x 2
+
+Field: 
+10x10 (1,1 is the top left corner)
+
+Communication:
+HIT
+MISS
+SUNK
+
+
