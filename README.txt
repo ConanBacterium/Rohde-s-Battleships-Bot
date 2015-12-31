@@ -6,4 +6,4 @@ Rohde's Battleships Bot is a bot that can play Battleships. Check the GameRules.
 
 Bye! :) 
 
-PS: This is my newest project, and one I'm currently working on. Planning to have it run on a server I'll code. And I will of course optimize, and fix errors. 
+PS: This is my newest project, and one I'm currently working on (December 2015). Planning to have it run on a server I'll code. And I will of course optimize, and fix errors. 
