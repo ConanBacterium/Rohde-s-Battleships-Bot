@@ -20,6 +20,11 @@ searchForDirection = 0 #integer used when a ship has been located. Check line un
 iLackedTheCreativityToGiveThisVariableAProperName = False #variable used to find out if the bot has shot one time after the end has been reached.
 #this is to know whether too shoot from the first element in the currentShip[] or from the last element :)
 
+#printAll function (self explanatory) - STATUS:
+def printAll():
+    print dir()
+    print globals()
+    print locals()
 
 #positionShips function (self explanatory) - STATUS: WORKS
 def positionShips():
@@ -111,6 +116,14 @@ def updateLists(response): #ONLY TO BE USED
         searchForDirection = 0 #Tell the bot to search for the rest of ship from the start, the next time it has a ship located
         endReached = False #the end has no longer been reached, as we are starting anew with finding and shooting at a ship
         iLackedTheCreativityToGiveThisVariableAProperName = False
+    elif response == "printAll":
+        printAll()
+    elif response == "exit":
+        print "Prf, looser"
+        exit()
+    else:
+        print "I did not understand your petty response, come again"
+        updateLists(raw_input())
 
     if len(hit) == 15:
         print "I WON! BYE"
@@ -124,6 +137,13 @@ def areWeHit(response):
     global ship1, ship2, ship3, ship4, ship5, losses
 
     miss = True
+
+    if response == "printAll":
+        printAll()
+    elif response == "exit":
+        print "Prf, looser"
+        exit()
+    # ELSEIF INPUT IS NOT COORDINATES
 
     #CHECKING IF SHIP1 HAS BEEN HIT!
     for i in ship1: #iterate through the coordinates of the first ship
@@ -317,29 +337,3 @@ def test():
     print ship5
 
 brain()
-
-#TO DO LIST: MAKE A FUCKING FUNCTION THAT PRINTS OUT ALL VARIABLES
-
-# hvis et skib har ramt koordinat-J og misser, men saa rammer et koordinat ved siden af, vil den alligevel proeve at ramme J...
-# if the enemy places it's ships besides eachother, the bot won't know what to do. If the bot has hit something more than once, and then misses at both ends
-#without sinking something, it has encountered two or more ships that lay beside each other.
-#5,6
-# >HIT
-# 6,6
-# >MISS
-# 5,5
-# >MISS
-# 4,6
-# >HIT
-# 3,6
-# >MISS
-# 6,6
-# >MISS
-# 6,6
-# >MISS
-# 6,6
-# >MISS
-# 6,6
-# >
-
-# 3.4, 3.5, 3.6, 3.7

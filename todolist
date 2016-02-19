@@ -1,8 +1,13 @@
-#TO DO LIST: MAKE A FUCKING FUNCTION THAT PRINTS OUT ALL VARIABLES
-
 # hvis et skib har ramt koordinat-J og misser, men saa rammer et koordinat ved siden af, vil den alligevel proeve at ramme J...
-# if the enemy places it's ships besides eachother, the bot won't know what to do. If the bot has hit something more than once, and then misses at both ends
-#without sinking something, it has encountered two or more ships that lay beside each other.
+
+# arewehit fucntion  ELSEIF INPUT IS NOT COORDINATES TRY AGAIN
+
+# if the enemy places it's ships besides eachother, the bot won't know what to do. If the bot has hit something more than once, and
+then misses at both ends without sinking something, it has encountered two or more ships that lay beside each other.
+Strategy: If misses twice, take currentShip and put it into another list. Search for each ship starting from each currentShip coordinate
+ (make sure not to shoot anywhere that has already been shot)
+
+
 #5,6
 # >HIT
 # 6,6

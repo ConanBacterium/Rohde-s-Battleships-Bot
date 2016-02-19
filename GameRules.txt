@@ -10,5 +10,7 @@ Communication:
 HIT
 MISS
 SUNK
+exit
+
 
 
