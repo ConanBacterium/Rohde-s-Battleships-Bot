@@ -8,22 +8,51 @@ Strategy: If misses twice, take currentShip and put it into another list. Search
  (make sure not to shoot anywhere that has already been shot)
 
 
-#5,6
-# >HIT
-# 6,6
-# >MISS
-# 5,5
-# >MISS
-# 4,6
-# >HIT
-# 3,6
-# >MISS
-# 6,6
-# >MISS
-# 6,6
-# >MISS
-# 6,6
-# >MISS
-# 6,6
-# >
+Shoot random
 
+Never shoot at same place twice
+
+Shoot in a circle around 1'st hit until second hit. Continue to shoot in that direction, until either MISS or SUNK. If SUNK, shoot random.
+If MISS, shoot at other end. If MISS again, two ships laying besides each other have been shot at. Shoot in circle around the HIT COORDINATES in
+CURRENT SHIP, until another hit. Continue to shoot in the direction until either MISS or SUNK. If MISS, shoot at other end. If SUNK, shoot in circle
+around the other HIT COORDINATES in CURRENT SHIP. Continue until you have sunk the amount that you hit in the start. :)
+
+searchForDirection = 0
+# 0 means that we haven't searched any directions yet. 1 means we've shot to the right. 2 means we've tried both the right and the top.
+# 3 means we've tried botht the right, top and the left. 4 means we've shot at the bottom, and then all directions have been tried. Something is
+# wrong then.
+
+Circle, one direction, other direction (CODOD): (increases or gets reset to 1 depending on response from opponent.
+0) 0 hits, shoot random
+1) 1 hit, circle-shooting to locate rest of ship
+2) 1+ hits, 0 misses after verOrHor has been found out: found direction of ship, shooting in the direction
+3) 1+ hits, 1 misses after verOrHor has been found out: found one end of the ship, shooting in the opposite direction
+
+When the bot has found out how to
+
+
+When the bot has a hit, it stores that hit in "startPoints", "currentShip" and increases int "hits". It then starts shooting the "stages of attack"
+from the hit in  If it finds out it's shooting at several ships, it stores all the "currentShip" hits in "startPoints". It takes the first
+ coordinate from "startPoints" and puts it in the "currentShip" coordinatesthe "stages of attack" methods. Everytime it sinks a ship, it removes that coordinate from "startPoints" and
+continues with the next startpoint, until "startPoints" is empty.
+
+Bot checks if startpoints is empty. If it's empty, shoot random. If it's not empty, and currentShip is empty (currentShip get's emptied each time there's
+a sunk), the first element of startpoints is copied to currentShip, and the bot starts shooting at the currentShip, until it get's a sunk, or two misses.
+If it get's two misses, the bot transfers all the coordinates from currentShip into the startpoints, and then removes everything from currentShip.
+It then start shooting with the stages of attack method based on currentShip coordinates. When a ship is sunk, currentShip is emptied and the first
+element of startpoints is removed. The next element of startpoints (which is now the first) is copied to currentShip, and the bot shoots at the new
+coordinate in currentShip. When a ship is sunk, the currentShip is cleared and the first element of startpoints is removed, and there's no more elements
+in startpoints, then shoot random and search for new ship.
+
+
+Attack:
+Step 1) startpoints is empty, so shoot random
+Step 2) startpoint is not empty, but currentShip is, so take first element of startpoint and put it into the currentShip. Now do the CODOD.
+Step 3) startpoint is not empty, neither is currentShip. Do the CODOD.
+
+Opponent answers:
+sunk -> clear currentShip and remove first element of startpoint
+miss -> if CODOD-1, increase searchForDirection
+        if CODOD-2, increase CODOD to CODOD-3
+        if CODOD-3, reset CODOD to CODOD-1, put all coordinates in currentShip to startpoints and clear currentShip.
+hit -> if CODOD-1, increase CODOD to CODOD-2
