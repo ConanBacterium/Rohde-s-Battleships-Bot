@@ -58,10 +58,14 @@ def funnyStuff(sizeOfShip, verOrHor): #ver == divisible by 2, hor == undivisible
 
 #STATUS: WORKS
 def attack(CODOD):
+    global currentTargetCoordinates, searchForDirection
     if CODOD == 0:
         randomShot()
     elif CODOD == 1:
         circleShot()
+
+        while(checkIfPrevTarg(currentTargetCoordinates) == True):
+            circleShot()
     elif CODOD > 1:
         directShot()
 
@@ -132,9 +136,7 @@ def circleShot():
          searchForDirection = 4 #so the bot knows it has shot below
 
      currentTargetCoordinates = str(temp[0]) + "," + str(temp[1])#Put the new coordinates into the currentTargetCoordinates
-     #if(checkIfPrevTarg(currentTargetCoordinates)):
-      #   searchForDirection = searchForDirection + 1
-       #  circleShot()
+
 
 #STATUS: WORKS
 def directShot():
