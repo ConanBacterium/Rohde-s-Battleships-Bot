@@ -56,3 +56,89 @@ miss -> if CODOD-1, increase searchForDirection
         if CODOD-2, increase CODOD to CODOD-3
         if CODOD-3, reset CODOD to CODOD-1, put all coordinates in currentShip to startpoints and clear currentShip.
 hit -> if CODOD-1, increase CODOD to CODOD-2
+
+
+
+#########
+If bot is shooting at 10,10 circle shot will go for 11,10
+
+
+###
+WTF !?
+10,10
+> HIT
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 0
+11,10
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 1
+10,9
+> HIT
+CODOD = 2
+CODOD = 2
+searchForDirection = 2
+10,8
+> MISS
+CODOD = 3
+CODOD = 3
+searchForDirection = 2
+10,11
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 2
+9,10
+> SUNK
+CODOD = 1
+currentShip = ['10,9']
+searchForDirection = 0
+11,9
+> MISS
+CODOD = 1
+currentShip = ['10,9']
+searchForDirection = 1
+10,8
+> MISS
+CODOD = 1
+currentShip = ['10,9']
+searchForDirection = 2
+9,9
+> SUNK
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 0
+11,10
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 1
+10,9
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 2
+9,10
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 3
+10,11
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 4
+10,10
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 4
+10,10
+> MISS
+CODOD = 1
+currentShip = ['10,10']
+searchForDirection = 4
+10,10
+>

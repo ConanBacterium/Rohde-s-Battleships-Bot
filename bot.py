@@ -86,7 +86,7 @@ class supermegakillerbot:
             if self.startPoints: #if startPoints is not empty
                 self.startPoints.pop(0) #remove first element
 
-            currentShip = [] #clear currentShip
+            self.currentShip = [] #clear currentShip
             if self.startPoints:
                 self.currentShip.append(self.startPoints[0]) #append the (new) first element of startPoints.
 
@@ -343,17 +343,32 @@ class supermegakillerbot:
     def brain(self):
         global codod, currentTargetCoordinates
         print "send msg to server"
-        server.sendmsg(server.channel,raw_input("> "))
         print "Okay, so you get to start, because my father was too lazy to finish me off ;)"
         while(True):
             print "Your turn!"
-            print self.areWeHit(raw_input(">>> "))
-            self.checkGameStatus()
+            #print self.areWeHit(raw_input(">>> "))
+            #self.checkGameStatus()
             self.attack(self.codod)
             print self.currentTargetCoordinates
             self.opponentAnswer(raw_input(">>>"))
             self.checkGameStatus()
 
+    def testAttack(self):
+        while(True):
+            self.attack(CODOD)
+            print self.currentTargetCoordinates
+            self.opponentAnswer(raw_input("> "))
+            print "CODOD = " + str(CODOD)
+
 shit = supermegakillerbot()
 
-shit.brain()
+shit.testAttack()
+#shit.brain()
+
+def testing():
+    global currentTargetCoordinates, CODOD
+    while (True):
+        attack(CODOD)
+        print currentTargetCoordinates
+        opponentAnswer(raw_input("> "))
+        print "CODOD = " + str(CODOD)
