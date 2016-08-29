@@ -9,9 +9,6 @@ from collections import namedtuple
     opponentanswer = updateModesAndLists #or something like that, something more descriptive
 
 
-    btw - there's some weird shit with the coordinates being sent and that stuff. First it sends two coordinates, because the shit the server sends
-    when connection involved a comma. Then the opponent has to write HIT twice before the bot starts circleshooting. 
-
 '''
 
 class BattleBot:
@@ -106,10 +103,10 @@ class BattleBot:
 
 
     def sendmsg(self, msg):
-        self.ircclient.sendmsg(self.ircclient.channel, msg)
+        self.ircclient.sendmsg(self.ircclient.channel, "battleshipmsg:" + msg)
 
     def recvcoordinate(self):
-        msg = self.ircclient.s.recv(2048)
+        msg = self.ircclient.recvbattleshipmsg()
         msg = self.extractPrivMsg(msg)
         print msg
         self.ircclient.ping(msg)
@@ -120,7 +117,7 @@ class BattleBot:
         #return msg
 
     def recvanswer(self):
-        msg = self.ircclient.s.recv(2048)
+        msg = self.ircclient.recvbattleshipmsg()
         print "recvanswer() function received a msg from the server"
         msg = self.extractPrivMsg(msg)
         print "recvanswer() function ran extractPrivMsg"
@@ -128,7 +125,7 @@ class BattleBot:
 
     def sendcoordinates(self, cds):
         msg = str(cds[0]) + "," + str(cds[1])
-        self.ircclient.sendmsg(self.ircclient.channel, msg)
+        self.sendmsg(msg)
 
     def getTargetCoordinates(self, codod, currentShip):
         targetCoordinates = ()
