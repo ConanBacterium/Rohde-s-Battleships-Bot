@@ -31,7 +31,8 @@ def opponentAnswer(response):
             startPoints.pop(0) #remove first element
 
         currentShip = [] #clear currentShip
-        currentShip.append(startPoints[0]) #append the (new) first element of startPoints.
+        if(startPoints):
+            currentShip.append(startPoints[0]) #append the (new) first element of startPoints.
 
         searchForDirection = 0 # meaning we haven't found out the direction of the ship yet
         if not startPoints: # if startPoints is empty
@@ -43,6 +44,7 @@ def opponentAnswer(response):
             CODOD = 3
             # last element of currentShip has to be the same as the new one, because directShot function looks for the last element of currentShip and shoots with that as a reference point, and since we're shooting at the other end now, the reference point is the first place we shot at
             currentShip.append(currentShip[0])
+            currentShip.pop(0) #remove the first element to avoid duplicates. The currentShip is copied to startPoints, and if we then have duplicates we'll shoot at the same points.
         elif CODOD == 3: #if several ships laying beside each other has been reached
             CODOD = 1
             startPoints = currentShip
@@ -69,8 +71,6 @@ def randomShot():
 def circleShot():
      global currentTargetCoordinates, currentShip, searchForDirection
      a = currentShip[0].split(",") #currentShip should only contain ONE string/element, as we're supposed to locate the rest of the ship
-     print "currentShip = " + str(currentShip)
-     print "searchForDirection = " + str(searchForDirection)
      temp = [int(a[0]), int(a[1])] #casting from string to int
 
      if searchForDirection == 0: #if we just started searching for the rest of the ship, shoot to the right (increase x)
@@ -94,8 +94,6 @@ def circleShot():
 #STATUS: WORKS
 def directShot():
     global searchForDirection, currentTargetCoordinates, CODOD
-    print "CODOD = " + str(CODOD)
-    print "searchForDirection = " + str(searchForDirection)
     if searchForDirection == 1: #if the ship lays horizontally and the bot started shooting to the right
         if CODOD == 3: #if end is reached shoot to the left of the first element
             a = currentShip[-1].split(",") #last hit on target coordinates made into a list of x and y
@@ -176,12 +174,23 @@ def checkIfPrevTarg(coordinates):
 # Step 2) startpoint is not empty, but currentShip is, so take first element of startpoint and put it into the currentShip. Now do the CODOD.
 # Step 3) startpoint is not empty, neither is currentShip. Do the CODOD.
 
+def printAll():
+    global CODOD, startPoints, currentShip, searchForDirection, missed, hit, currentTargetCoordinates
+    print "codod: " + str(CODOD)
+    print "startpoints: " + str(startPoints)
+    print "currentShip: " + str(currentShip)
+    print "searchForDirection: " + str(searchForDirection)
+    print "missed: " + str(missed)
+    print "hit: " + str(hit)
+    print "currentTargetCoordinates" + str(currentTargetCoordinates)
+    print "\n\n"
+
 def testing():
     global currentTargetCoordinates, CODOD
     while (True):
         attack(CODOD)
         print currentTargetCoordinates
         opponentAnswer(raw_input("> "))
-        print "CODOD = " + str(CODOD)
+        printAll()
 
 testing()

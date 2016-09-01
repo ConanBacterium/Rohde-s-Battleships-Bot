@@ -8,7 +8,7 @@ from collections import namedtuple
     codod = attackmode
     opponentanswer = updateModesAndLists #or something like that, something more descriptive
 
-
+    When
 '''
 
 class BattleBot:
@@ -47,6 +47,9 @@ class BattleBot:
             self.sendcoordinates(currentTargetCoordinates)
             print "sent target coordinates"
             self.opponentAnswer(self.recvanswer(), currentTargetCoordinates)#receive answer and update shizniz
+            print "codod: " + str(self.codod)
+            print "startPoints: " + str(self.startPoints)
+            print "currentShip: " + str(self.currentShip)
             print"ran opponentAnswer()"
             self.recvcoordinate()
             print "received coordinate"
@@ -74,15 +77,16 @@ class BattleBot:
 
         elif "MISS" in response:
             self.missed.append(currentTargetCoordinates)
-            if self.codod == 2:
-                self.codod = 3
+            if self.codod == 2: ## if there has been shot to the right
+                self.codod = 3 # set attack-mode to shoot to the left
                 # last element of currentShip has to be the same as the new one, because directShot function looks for the last element of currentShip and shoots with that as a reference point, and since we're shooting at the other end now, the reference point is the first place we shot at
                 self.currentShip.append(self.currentShip[0])
-            elif self.codod == 3: #if several ships laying beside each other has been reached
+                self.currentShip.pop(0) #remove the first element to avoid duplicates. The currentShip is copied to startPoints, and if we then have duplicates we'll shoot at the same points.
+            elif self.codod == 3: #if several ships laying beside each other has been reached (codod only reaches 3, when codod has already been 2 - which then means that there's been shot to the left and right.
                 self.codod = 1
-                startPoints = self.currentShip
-                currentShip = []
-                currentShip.append(startPoints[0])
+                self.startPoints = self.currentShip
+                self.currentShip = [] # clear currentShip
+                self.currentShip.append(self.startPoints[0])
             print "opponentAnswer() response was MISS"
 
         elif "HIT" in response:
@@ -142,7 +146,7 @@ class BattleBot:
             while(self.checkIfPrevTarg(targetCoordinates) == True): #make sure not too shoot at the same coordinate twice
                 targetCoordinates = self.circleShot(currentShip)
         elif codod > 1:
-            targetCoordinates = self.directShot()
+            targetCoordinates = self.directShot(codod, self.searchForDirection)
             if self.checkIfPrevTarg(targetCoordinates):
                 print "Something has gone terribly wrong, cheating suspected: directShot returns a coordinate that has already been shot at (ships are laying over each other)"
 
@@ -167,6 +171,65 @@ class BattleBot:
 
         newCoordinates = (x, y)
         return newCoordinates
+
+    def directShot(self, codod, searchForDirection):
+        '''
+            !!!HARDCODED!!!
+        '''
+
+        lastx = self.currentShip[-1][0] # x coordinate of the last hit on the currentShip.
+        lasty = self.currentShip[-1][1] # y coordinate of the last hit on the currentShip.
+
+        targetCoordinates = ()
+        print "codod = " + str(codod)
+        print "searchForDirection = " + str(searchForDirection)
+
+        if searchForDirection == 1: #if the ship lays horizontally and the bot started shooting to the right
+            if codod == 3: #if end is reached shoot to the left of the first element
+                lastx = lastx - 1 #decrease the x value (the first element)
+
+                targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+            elif codod == 2: #shoot to the right
+                 lastx = lastx + 1 #increase the x value (the first element)
+
+                 targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+        elif searchForDirection == 2: #if the ship lays vertically, and the bot started shooting above
+            if codod == 3: #if end is reached shoot below
+                lasty = lasty + 1 #increase the y value (the second element)
+
+                targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+            elif codod == 2: #shoot above the last element
+                lasty = lasty - 1 #decrease the y value (the second element)
+
+                targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+        elif searchForDirection == 3: #if the ship lays horizontally, and the bot started shooting to the left
+            if codod == 3: #if end is reached shoot to the right of the first element
+                lastx = lastx + 1 #increase the x value (the second element)
+
+                targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+
+            elif codod == 2: #if end is not reached -  #shoot to the left of the last element
+                lastx = lastx - 1 #decrease the x value (the second element)
+
+                targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+        elif searchForDirection == 4: #if the ship lays vertically, and the bot started shooting below
+            if codod == 3: #if end is reached shoot above the first element
+                lasty = lasty - 1 #decrease the y value (the second element)
+
+                targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+            elif codod == 2: #if end is not reached - #shoot below the last element
+                lasty = lasty + 1 #decrease the y value (the second element)
+
+                targetCoordinates = (lastx, lasty) #Put the new coordinates into the targetCoordinates
+
+        return targetCoordinates
 
     def checkIfPrevTarg(self, coordinates):
         for i in self.missed:
