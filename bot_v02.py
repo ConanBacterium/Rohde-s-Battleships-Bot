@@ -62,6 +62,7 @@ class BattleBot:
 
         if "SUNK" in response:
             self.hit.append(currentTargetCoordinates)
+            self.searchForDirection = 0 #now that the ship has been sunk, there hasn't been shot at other directiones.
             self.codod = 1 # circle shoot
             if self.startPoints: #if startPoints is not empty
                 self.startPoints.pop(0) #remove first element
@@ -141,32 +142,41 @@ class BattleBot:
                 targetCoordinates = (randint(1,10), randint(1,10))
 
         elif codod == 1:
-            targetCoordinates = self.circleShot(currentShip)
+            targetCoordinates = self.circleShot(currentShip[0]) # the currentShip[0] is the coordinate that the bot has to circleShoot around
 
             while(self.checkIfPrevTarg(targetCoordinates) == True): #make sure not too shoot at the same coordinate twice
-                targetCoordinates = self.circleShot(currentShip)
+                print "circleShot returned coordinates that had already been shot at"
+                print "searchForDirection = " + str(self.searchForDirection)
+                if self.searchForDirection < 4:
+                    self.searchForDirection = self.searchForDirection + 1
+                else:
+                    self.searchForDirection = 1
+                print "new searchForDirection = " + str(self.searchForDirection)
+                print "targetCoordinates = " + str(targetCoordinates)
+                targetCoordinates = self.circleShot(currentShip[0])
+                print "new targetCoordinates = " + str(targetCoordinates)
+                time.sleep(3)
         elif codod > 1:
             targetCoordinates = self.directShot(codod, self.searchForDirection)
             if self.checkIfPrevTarg(targetCoordinates):
-                print "Something has gone terribly wrong, cheating suspected: directShot returns a coordinate that has already been shot at (ships are laying over each other)"
+                print "directShot returns a coordinate that has already been shot at"
 
         return targetCoordinates
 
-    def circleShot(self, currentShip):
-        newCoordinates = currentShip[0] # stores the coordinates which have been succesfully shot, and is the first hit on the current ship
-        x = newCoordinates[0]
-        y = newCoordinates[1]
+    def circleShot(self, coordinateToBeCircled):
+        x = coordinateToBeCircled[0]
+        y = coordinateToBeCircled[1]
         if self.searchForDirection == 0: #if we just started searching for the rest of the ship, shoot to the right (increase x)
-            x = newCoordinates[0] + 1 #increase x value (shoot to the right)
+            x = coordinateToBeCircled[0] + 1 #increase x value (shoot to the right)
             self.searchForDirection = 1 # so the bot knows that it has shot to the right
         elif self.searchForDirection == 1: #if we already shot to the right in the search for the rest of the ship, shoot above (decrease y)
-            y = newCoordinates[1] - 1
+            y = coordinateToBeCircled[1] - 1
             self.searchForDirection = 2 #so the bot knows that it has shot above
         elif self.searchForDirection == 2: #if we already shot above in the search for the rest of the ship, shoot to the left (decrease x)
-            x = newCoordinates[0] - 1
+            x = coordinateToBeCircled[0] - 1
             self.searchForDirection = 3 #so the bot knows it has shot to the left
         elif self.searchForDirection == 3: #if we already shot to the left in the search for the rest of the ship, shoot below (increase y)
-            y = newCoordinates[1] + 1
+            y = coordinateToBeCircled[1] + 1
             self.searchForDirection = 4 #so the bot knows it has shot below
 
         newCoordinates = (x, y)

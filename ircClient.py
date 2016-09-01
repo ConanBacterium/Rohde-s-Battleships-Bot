@@ -27,8 +27,10 @@ class IrcClient(threading.Thread):
     #Function for getting messages related to the bot - ignoring the server shit
     def recvbattleshipmsg(self):
         msg = self.s.recv(2048)
+        self.ping(msg)
         while("battleshipmsg:" not in msg): # wait for battleshipmsg
             msg = self.s.recv(2048)
+            self.ping(msg)
         return msg
 
 
