@@ -28,6 +28,7 @@ class IrcClient(threading.Thread):
     def recvbattleshipmsg(self):
         msg = self.s.recv(2048)
         self.ping(msg)
+        msg = msg.strip('\n\r') #removing linebreaks
         while("battleshipmsg:" not in msg): # wait for battleshipmsg
             msg = self.s.recv(2048)
             self.ping(msg)

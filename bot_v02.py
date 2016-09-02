@@ -51,7 +51,7 @@ class BattleBot:
             print "startPoints: " + str(self.startPoints)
             print "currentShip: " + str(self.currentShip)
             print"ran opponentAnswer()"
-            self.recvcoordinate()
+            print "coordinate received:" + str(self.recvcoordinate())
             print "received coordinate"
             #receive coordinates and respond with HIT/MISS/SUNK. Then shoot.
 
@@ -104,7 +104,7 @@ class BattleBot:
         nick = msg.split ( '!' ) [ 0 ].replace ( ':', '' )
         message = ':'.join ( msg.split ( ':' ) [ 2: ] )
         print nick + ':', message
-        return msg
+        return message
 
 
     def sendmsg(self, msg):
@@ -114,12 +114,14 @@ class BattleBot:
         msg = self.ircclient.recvbattleshipmsg()
         msg = self.extractPrivMsg(msg)
         print msg
-        self.ircclient.ping(msg)
         while("," not in msg):
             msg = self.ircclient.s.recv(2048)
         print "RECEIVED A COORDINATE: " + msg
-        # extract the coordinate from the irc message
-        #return msg
+        msg = msg.split(":") #split the message (msg will now be ["battleshipmsg", "x,y"]
+        msg = msg[1] #msg is now just equal to "x,y"
+        msg = msg.split(",") #msg is now equal to ["x", "y"]
+        msg = (int(msg[0]), int(msg[1])) #msg is now a tuple equal to (x, y) ### now converted to integers.
+        return msg
 
     def recvanswer(self):
         msg = self.ircclient.recvbattleshipmsg()
@@ -155,11 +157,14 @@ class BattleBot:
                 print "targetCoordinates = " + str(targetCoordinates)
                 targetCoordinates = self.circleShot(currentShip[0])
                 print "new targetCoordinates = " + str(targetCoordinates)
-                time.sleep(3)
+                #time.sleep(3) This was for troubleshooting - without I couldn't read the output in time.
         elif codod > 1:
             targetCoordinates = self.directShot(codod, self.searchForDirection)
             if self.checkIfPrevTarg(targetCoordinates):
                 print "directShot returns a coordinate that has already been shot at"
+                '''
+                    WTF SHOULD BE DONE HERE ?!?!?! I think the bot needs to just shoot in the opposite direction - but I haven't checked up on my hunch
+                '''
 
         return targetCoordinates
 
