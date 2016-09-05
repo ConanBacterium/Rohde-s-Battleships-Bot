@@ -22,6 +22,7 @@ class BattleBot:
     startPoints = [] #holds all the coordinates of starting points of ships that we know of and haven't yet sinked/sunk
     codod = 0
     currentShip = [] # holds all the coordinates of the ship that we're attacking
+    losses = 0 #how many times have we been hit?
 
     def __init__(self):
         self.ircclient = server.IrcClient()
@@ -55,8 +56,8 @@ class BattleBot:
             print "startPoints: " + str(self.startPoints)
             print "currentShip: " + str(self.currentShip)
             print"ran opponentAnswer()"
-            print "coordinate received:" + str(self.recvcoordinate())
-            print "received coordinate"
+            self.sendmsg(self.getBotResponse(self.recvcoordinate()))
+            print "responded HIT/MISS/SUNK"
             #receive coordinates and respond with HIT/MISS/SUNK. Then shoot.
 
     def getShips(self):
@@ -75,15 +76,13 @@ class BattleBot:
             legit = True
             startposx = randint(1, 10 - size) # to make sure that the ship doesn't pass the borders of the grid (should be optimized to consider if the ship is ver or hor)
             startposy = randint(1, 10 - size) # ^
-
-            theCoordinate = str(startposx) + "," + str(
-                startposy)  # string holding the current coordinate that's being tested
+            theCoordinate = () #tuple holding the coordinate
             for i in range(0, size):
                 if verOrHor % 2 == 0:  # If the ship should be positioned horizontally
-                    theCoordinate = str(startposx) + "," + str(startposy + i)  # Increment of the y position
+                    startposy = startposy + 1# Increment of the y position
                 elif verOrHor % 2 != 0:
-                    theCoordinate = str(startposx + i) + "," + str(startposy)  # Increment of the x position
-
+                    startposx = startposx + 1 # Increment of the x position
+                theCoordinate = (startposx, startposy)  # tuple holding the current coordinate that's being tested
                 if theCoordinate in self.allShipCoordinates:  # If theCoordinate is already used
                     legit = False  # Makes sure that the coordinates won't be given to the alLShipCoordinations and that the coordinates list will be cleaned
                 elif theCoordinate not in self.allShipCoordinates:  # If theCoordinate is not in use
@@ -96,6 +95,25 @@ class BattleBot:
             elif legit == False:
                 del coordinates[:]  # clean the coordinates list
         return coordinates
+
+    # returns HIT/SUNK/MISS
+    def getBotResponse(self, coordinate):
+        hit = False
+
+        for i in self.ships: #iterate through the ships list
+            for x in i: #iterate through the individual ship list
+                if x == coordinate:
+                    hit = True
+                    i.remove(x) #remove the coordinate from the ship
+                    self.losses = self.losses + 1
+
+                    if not i: #if the list containing the ship coordinates is empty it has been sunk
+                        return "SUNK"
+                    else: #if the ship hasn't been sunk yet
+                        return "HIT"
+
+        if hit == False:
+            return "MISS"
 
     def opponentAnswer(self, response, currentTargetCoordinates):
 
