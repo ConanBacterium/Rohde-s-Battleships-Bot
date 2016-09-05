@@ -52,11 +52,15 @@ class BattleBot:
             self.sendcoordinates(currentTargetCoordinates)
             print "sent target coordinates"
             self.opponentAnswer(self.recvanswer(), currentTargetCoordinates)#receive answer and update shizniz
+            time.sleep(1)
+            self.checkForGameOver()
             print "codod: " + str(self.codod)
             print "startPoints: " + str(self.startPoints)
             print "currentShip: " + str(self.currentShip)
             print"ran opponentAnswer()"
             self.sendmsg(self.getBotResponse(self.recvcoordinate()))
+            time.sleep(1)
+            self.checkForGameOver()
             print "responded HIT/MISS/SUNK"
             #receive coordinates and respond with HIT/MISS/SUNK. Then shoot.
 
@@ -166,6 +170,15 @@ class BattleBot:
         print nick + ':', message
         return message
 
+    def checkForGameOver(self):
+        if self.losses > 14:
+            print "DEFEAT!"
+            self.sendmsg("You win, dammit, fuck!!!!!! ABORT MISSION!")
+            exit(0)
+        elif len(self.hit) > 14:
+            print "VICTORY!"
+            self.sendmsg("I win. It was easy. Because you suck.")
+            exit(0)
 
     def sendmsg(self, msg):
         self.ircclient.sendmsg(self.ircclient.channel, "battleshipmsg:" + msg)

@@ -68,19 +68,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bot_v02.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bot_v02.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bot_v02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="59" column="42" selection-start-line="59" selection-start-column="42" selection-end-line="59" selection-end-column="42" />
+            <state relative-caret-position="377">
+              <caret line="54" column="25" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
               <folding>
                 <element signature="e#26#52#0" expanded="true" />
-                <element signature="e#2693#3123#0" expanded="false" />
-                <element signature="e#3190#4835#0" expanded="false" />
-                <element signature="e#4915#5529#0" expanded="false" />
-                <element signature="e#5606#8166#0" expanded="false" />
-                <element signature="e#8211#8405#0" expanded="false" />
-                <element signature="e#12704#15572#0" expanded="false" />
+                <element signature="e#1327#1536#0" expanded="false" />
+                <element signature="e#2817#3247#0" expanded="false" />
+                <element signature="e#3314#4959#0" expanded="false" />
+                <element signature="e#5039#5653#0" expanded="false" />
+                <element signature="e#5730#8290#0" expanded="false" />
+                <element signature="e#8335#8529#0" expanded="false" />
+                <element signature="e#8896#8966#0" expanded="false" />
+                <element signature="e#9006#9557#0" expanded="false" />
+                <element signature="e#9593#9817#0" expanded="false" />
+                <element signature="e#9863#9926#0" expanded="false" />
+                <element signature="e#9992#11809#0" expanded="false" />
+                <element signature="e#11868#13093#0" expanded="false" />
+                <element signature="e#13156#16024#0" expanded="false" />
+                <element signature="e#16078#16362#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -96,11 +104,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ircClient.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ircClient.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ircClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="8" column="36" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="36" />
+            <state relative-caret-position="126">
+              <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
               <folding>
                 <element signature="e#27#40#0" expanded="true" />
               </folding>
@@ -517,12 +525,20 @@
           <caret line="75" column="39" selection-start-line="75" selection-start-column="39" selection-end-line="75" selection-end-column="39" />
           <folding>
             <element signature="e#26#52#0" expanded="true" />
-            <element signature="e#2693#3123#0" expanded="false" />
-            <element signature="e#3190#4835#0" expanded="false" />
-            <element signature="e#4915#5529#0" expanded="false" />
-            <element signature="e#5606#8166#0" expanded="false" />
-            <element signature="e#8211#8405#0" expanded="false" />
-            <element signature="e#12704#15572#0" expanded="false" />
+            <element signature="e#1327#1536#0" expanded="false" />
+            <element signature="e#2817#3247#0" expanded="false" />
+            <element signature="e#3314#4959#0" expanded="false" />
+            <element signature="e#5039#5653#0" expanded="false" />
+            <element signature="e#5730#8290#0" expanded="false" />
+            <element signature="e#8335#8529#0" expanded="false" />
+            <element signature="e#8896#8966#0" expanded="false" />
+            <element signature="e#9006#9557#0" expanded="false" />
+            <element signature="e#9593#9817#0" expanded="false" />
+            <element signature="e#9863#9926#0" expanded="false" />
+            <element signature="e#9992#11809#0" expanded="false" />
+            <element signature="e#11868#13093#0" expanded="false" />
+            <element signature="e#13156#16024#0" expanded="false" />
+            <element signature="e#16078#16362#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1209,16 +1225,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ircClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="8" column="36" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="36" />
-          <folding>
-            <element signature="e#27#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testedytesttest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -1229,16 +1235,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bot_v02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="59" column="42" selection-start-line="59" selection-start-column="42" selection-end-line="59" selection-end-column="42" />
+        <state relative-caret-position="377">
+          <caret line="54" column="25" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
           <folding>
             <element signature="e#26#52#0" expanded="true" />
-            <element signature="e#2693#3123#0" expanded="false" />
-            <element signature="e#3190#4835#0" expanded="false" />
-            <element signature="e#4915#5529#0" expanded="false" />
-            <element signature="e#5606#8166#0" expanded="false" />
-            <element signature="e#8211#8405#0" expanded="false" />
-            <element signature="e#12704#15572#0" expanded="false" />
+            <element signature="e#1327#1536#0" expanded="false" />
+            <element signature="e#2817#3247#0" expanded="false" />
+            <element signature="e#3314#4959#0" expanded="false" />
+            <element signature="e#5039#5653#0" expanded="false" />
+            <element signature="e#5730#8290#0" expanded="false" />
+            <element signature="e#8335#8529#0" expanded="false" />
+            <element signature="e#8896#8966#0" expanded="false" />
+            <element signature="e#9006#9557#0" expanded="false" />
+            <element signature="e#9593#9817#0" expanded="false" />
+            <element signature="e#9863#9926#0" expanded="false" />
+            <element signature="e#9992#11809#0" expanded="false" />
+            <element signature="e#11868#13093#0" expanded="false" />
+            <element signature="e#13156#16024#0" expanded="false" />
+            <element signature="e#16078#16362#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ircClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+          <folding>
+            <element signature="e#27#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
