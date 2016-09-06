@@ -4,13 +4,12 @@ Ships pr player (may not lay diagonally):
 2 x 2
 
 Field: 
-10x10 (1,1 is the top left corner)
+10x10
 
 Communication:
-HIT
-MISS
-SUNK
-exit
+battleshipmsg:HIT
+battleshipmsg:MISS
+battleshipmsg:SUNK
 
 
 
