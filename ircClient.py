@@ -27,21 +27,17 @@ class IrcClient(threading.Thread):
     #Function for getting messages related to the bot - ignoring the server shit
     def recvbattleshipmsg(self):
         msg = self.s.recv(2048)
+
         self.ping(msg)
-        msg = msg.strip('\n\r') #removing linebreaks
         while("battleshipmsg:" not in msg): # wait for battleshipmsg
             msg = self.s.recv(2048)
             self.ping(msg)
-        return msg
-
-
-        msg = self.s.recv(2048)
-        self.ping(msg)
-        nick = msg.split ( '!' ) [ 0 ].replace ( ':', '' )
-        message = ':'.join ( msg.split ( ':' ) [ 2: ] )
-        if message.find("battleshitmsg:"):
-            message = message.split(':')
-            print "Found privmsg "
+        msg = msg.strip('\n\r') #removing linebreaks
+        nick = msg.split ( '!' ) [ 0 ].replace ( ':', '' ) #get the nickname outta the IRC string
+        message = ':'.join ( msg.split ( ':' ) [ 2: ] ) #get the privmsg #wtf
+        message = msg.split(':') #split at the colons, so you get ['', 'someshit','battleshipmsg:', 'the message']
+        print message
+        return message[3] #send 'the message'
 
     def __init__(self):
         print "IrcClient _init_"

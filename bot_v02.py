@@ -4,7 +4,12 @@ import time
 from random import randint
 from collections import namedtuple
 
-''' renaming that has to be done with the program is finished:
+'''
+    TODO:
+    fix how messages are received from the server. Recvanswer calls irc.recvbattleshipmsg to get the complete msg, then calls
+    extractprivmsg to get the nickname: + msg. It should cut off the nickname, and the prefix "battleshipmsg".
+
+    renaming that has to be done with the program is finished:
     codod = attackmode
     opponentanswer = updateModesAndLists #or something like that, something more descriptive
     When
@@ -33,19 +38,32 @@ class BattleBot:
         # !!!!    TEST    !!!!
         self.brain()
 
-
-
     def brain(self):
         print "BattleBot.brain()"
         gameOver = False
         currentTargetCoordinates = (0,0)
-
-        self.sendmsg("Welcome to Rohde's Battleship Bot. My game, my rules - I start!")
-        self.ships = self.getShips() # place ships
+        self.ships = self.getShips()  # place ships
         print self.ships
+
+        self.sendmsg("Welcome to Rohde's Battleship Bot. My game, my rules - do you wanna start? (y/n)")
+        answ = self.recvanswer()
+        if answ == "y":
+            print "opponent starts!"
+            self.sendmsg("go ahead, you start")
+            print "Current state: " + str(self.codod)
+            self.sendmsg(self.getBotResponse(self.recvcoordinate())) #receive enemy attack coordinates, and send back information on whether it was a hit or not
+            time.sleep(1)
+            self.checkForGameOver()
+            print "responded HIT/MISS/SUNK"
+        else:
+            print "received answer was not 'y', but: " + answ
+            self.sendmsg("Okay, I start!")
+
 
         while(gameOver == False):
             print "Current state: " + str(self.codod)
+
+            # bot's turn
 
             currentTargetCoordinates = self.getTargetCoordinates(self.codod, self.currentShip)
             print "got target coordinates"
@@ -58,6 +76,9 @@ class BattleBot:
             print "startPoints: " + str(self.startPoints)
             print "currentShip: " + str(self.currentShip)
             print"ran opponentAnswer()"
+
+            # opponents turn
+
             self.sendmsg(self.getBotResponse(self.recvcoordinate()))
             time.sleep(1)
             self.checkForGameOver()
@@ -163,12 +184,7 @@ class BattleBot:
                 self.codod = 1
             print "opponentAnswer() response was HIT"
 
-    def extractPrivMsg(self, msg):
-        print "extractPrivmsg"
-        nick = msg.split ( '!' ) [ 0 ].replace ( ':', '' )
-        message = ':'.join ( msg.split ( ':' ) [ 2: ] )
-        print nick + ':', message
-        return message
+
 
     def checkForGameOver(self):
         if self.losses > 14:
@@ -199,8 +215,6 @@ class BattleBot:
     def recvanswer(self):
         msg = self.ircclient.recvbattleshipmsg()
         print "recvanswer() function received a msg from the server"
-        msg = self.extractPrivMsg(msg)
-        print "recvanswer() function ran extractPrivMsg"
         return msg
 
     def sendcoordinates(self, cds):
